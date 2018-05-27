@@ -110,15 +110,23 @@ fi
 
 # install virtual box
 if cant_find_program VBoxManage; then
-  if grep --color vmx /proc/cpuinfo > /dev/null; then
     sudo apt -y install virtualbox
-  else
-    echo "VT-x or AMD-v virtualization must be enabled in your computer’s BIOS and re-run this script"
-  fi
+    echo "REMINDER: Turn VT-x on in the BIOS for all CPU modes before running virtualbox or minikube!"
 fi
 
 # install mini-kube
+# FYI: minikube delete && rm -rf ~/.minikube
+# minikube start --vm-driver=xvirtualbox
 # https://github.com/kubernetes/minikube/blob/v0.27.0/README.md
 if cant_find_program minikube; then
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.27.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+fi
+
+# install docker
+if cant_find_program docker; then
+  sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
+  sudo apt update
+  sudo apt -y install docker-ce
 fi
