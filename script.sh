@@ -130,3 +130,15 @@ if cant_find_program docker; then
   sudo apt update
   sudo apt -y install docker-ce
 fi
+
+if cant_find_program code; then
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt -y update
+sudo apt -y install code
+fi
+
+# add these to the config
+# "telemetry.enableTelemetry": false,
+# "telemetry.enableCrashReporter": false
