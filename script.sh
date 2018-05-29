@@ -130,6 +130,7 @@ if cant_find_program docker; then
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
   sudo apt update
   sudo apt -y install docker-ce
+  sudo usermod -a -G docker $USER
 fi
 
 if cant_find_program code; then
