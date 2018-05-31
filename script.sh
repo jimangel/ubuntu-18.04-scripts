@@ -16,6 +16,7 @@
 # set vars
 goVersion="1.10.2"
 kubectlVersion="1.10.2"
+javaVersion="11"
 
 # set font colors
 red='\033[0;31m'
@@ -85,8 +86,8 @@ cat << 'EOT' >> ~/.bashrc
 
 # set PATH so it includes go bin if it exists
 if [ -d "/usr/local/go/bin" ] ; then
-    PATH="$PATH:/usr/local/go/bin"
-    GOPATH="$HOME/go/"
+    PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+    GOPATH="$HOME/go"
 fi
 EOT
 # create working dirs
@@ -170,4 +171,20 @@ wget -q --show-progress --https-only --timestamping \
   chmod +x cfssl_linux-amd64 cfssljson_linux-amd64
   sudo mv cfssl_linux-amd64 /usr/local/bin/cfssl
   sudo mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
+fi
+
+if cant_find_program nodejs; then
+  sudo apt -y install nodejs
+fi
+
+if cant_find_program java; then
+ sudo apt -y install openjdk-${javaVersion}-jdk
+fi
+
+if cant_find_program npm; then
+ sudo apt -y install npm
+fi
+
+if cant_find_program gulp; then
+  sudo npm install -g gulp
 fi
