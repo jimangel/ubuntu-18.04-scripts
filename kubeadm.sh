@@ -17,6 +17,10 @@
 # sudo apt install golang-go
 # go get github.com/kubernetes-incubator/cri-tools/cmd/crictl
 
+# add CNI - replace with coreDNS ...
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+
 # SETUP & RUN
 # sudo apt -y install curl
 # curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/kubeadm.sh | sudo -E bash -
