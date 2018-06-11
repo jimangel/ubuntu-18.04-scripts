@@ -4,6 +4,11 @@
 
 # TESTED ON UBUNTU 18.04 LTS
 
+# TO DO:
+# create template and clean up script
+# https://gist.github.com/jcppkkk/ba195725a2532bce3740315c637b7414
+# update template to blacklist ipv6 via: sudo bash -c "echo blacklist ipv6 >> /etc/modprobe.d/blacklist.conf"
+
 # SETUP & RUN
 # sudo apt -y install curl
 # curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/kubeadm.sh | sudo -E bash -
