@@ -9,6 +9,14 @@
 # https://gist.github.com/jcppkkk/ba195725a2532bce3740315c637b7414
 # update template to blacklist ipv6 via: sudo bash -c "echo blacklist ipv6 >> /etc/modprobe.d/blacklist.conf"
 
+# fix swap
+# sudo swapoff -a
+# sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
+
+# add golang and critcl
+# sudo apt install golang-go
+# go get github.com/kubernetes-incubator/cri-tools/cmd/crictl
+
 # SETUP & RUN
 # sudo apt -y install curl
 # curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/kubeadm.sh | sudo -E bash -
