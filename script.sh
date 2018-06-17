@@ -6,25 +6,32 @@
 
 # TO DO
 # - git custom file
-# - install vscode
 # - consolidate the apt install junk...
 
 # SETUP & RUN
 # sudo apt -y install curl
 # curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/script.sh | sudo -E bash -
 
-# set vars
+# SET VARS
 goVersion="1.10.2"
 kubectlVersion="1.10.2"
 javaVersion="11"
-
 # set font colors
 red='\033[0;31m'
-nocolor='\033[0m' 
+nocolor='\033[0m'
 
 # build function to see if program exists
 cant_find_program() {
   if command -v "${1}" > /dev/null 2>&1; then
+    return 1
+  fi
+}
+
+cant_find_npm_program() {
+    if command -v "${1}" > /dev/null 2>&1; then
+      if cant_find_program npm; then
+        sudo apt -y install npm
+      fi
     return 1
   fi
 }
@@ -60,7 +67,7 @@ fi
 # git config --global user.name "<name>"
 
 # install media codecs and fonts
-if ! grep "Commandline: apt install ubuntu-restricted-extras" /var/log/apt/history.log; then
+if ! grep "Commandline: apt install ubuntu-restricted-extras" /var/log/apt/history.log > /dev/null; then
 sudo apt -y install ubuntu-restricted-extras
 fi
 
@@ -134,6 +141,7 @@ if cant_find_program docker; then
   sudo usermod -a -G docker $USER
 fi
 
+# install vscode
 if cant_find_program code; then
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
@@ -141,17 +149,6 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode s
 sudo apt -y update
 sudo apt -y install code
 fi
-
-# add these to the config
-# "telemetry.enableTelemetry": false,
-# "telemetry.enableCrashReporter": false
-
-# install conjure-up for 'consure-up kubernetes' on vSphere
-#if cant_find_program conjure-up; then
-#sudo snap install conjure-up --classic
-# look into this
-#sudo snap install lxd
-#fi
 
 if cant_find_program gcloud; then
 # Create environment variable for correct distribution
@@ -173,6 +170,7 @@ wget -q --show-progress --https-only --timestamping \
   sudo mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
 fi
 
+# install remaining reqs for k8s dashboard dev
 if cant_find_program nodejs; then
   sudo apt -y install nodejs
 fi
@@ -181,10 +179,15 @@ if cant_find_program java; then
  sudo apt -y install openjdk-${javaVersion}-jdk
 fi
 
-if cant_find_program npm; then
- sudo apt -y install npm
-fi
-
-if cant_find_program gulp; then
+if cant_find_npm_program gulp; then
   sudo npm install -g gulp
 fi
+
+# install ZOOM clinet?
+
+if cant_find_program aspell; then
+ sudo apt -y install aspell
+fi
+
+# sudo apt autoremove <- might need to add at the end?
+# look into using apt for more of this stuff w/ version control
