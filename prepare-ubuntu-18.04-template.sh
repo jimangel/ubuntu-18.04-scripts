@@ -1,5 +1,12 @@
 #!/bin/bash
+######################################################
+#### WARNING PIPING TO BASH IS STUPID: DO NOT USE THIS
+######################################################
 # modified from: jcppkkk/prepare-ubuntu-template.sh
+# TESTED ON UBUNTU 18.04 LTS
+
+# SETUP & RUN
+# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/prepare-ubuntu-18.04-template.sh | sudo -E bash -
 
 if [ `id -u` -ne 0 ]; then
 	echo Need sudo
@@ -7,7 +14,6 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 set -v
-
 
 #update apt-cache
 apt update -y
