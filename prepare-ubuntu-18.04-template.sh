@@ -84,7 +84,7 @@ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 sudo cloud-init clean --logs
 
 #cleanup shell history
-history -c
+cat /dev/null > ~/.bash_history && history -c
 history -w
 
 #shutdown
