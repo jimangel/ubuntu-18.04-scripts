@@ -88,4 +88,4 @@ history -c
 history -w
 
 #shutdown
-reboot -h now
+shutdown -h now
