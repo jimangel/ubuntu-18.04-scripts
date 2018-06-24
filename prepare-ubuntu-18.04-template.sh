@@ -6,7 +6,7 @@
 # TESTED ON UBUNTU 18.04 LTS
 
 # SETUP & RUN
-# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/prepare-ubuntu-18.04-template.sh | sudo -E bash -
+# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-18.04-scripts/master/prepare-ubuntu-18.04-template.sh | sudo -E bash -
 
 if [ `id -u` -ne 0 ]; then
 	echo Need sudo
