@@ -41,7 +41,7 @@ rm -rf /var/tmp/*
 rm -f /etc/ssh/ssh_host_*
 
 #add check for ssh keys on reboot...regenerate if neccessary
-cat <<EOL | sudo tee /etc/rc.local
+cat << 'EOL' | sudo tee /etc/rc.local
 #!/bin/sh -e
 #
 # rc.local
@@ -55,13 +55,13 @@ cat <<EOL | sudo tee /etc/rc.local
 #
 # By default this script does nothing.
 
-test -f /etc/ssh/ssh_host_dsa_key || dpkg-reconfigure openssh-server
-exit 0
-
 # dynamically create hostname (optional)
 if hostname | grep localhost; then
-    hostnamectl set-hostname $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
+    hostnamectl set-hostname "$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')"
 fi
+
+test -f /etc/ssh/ssh_host_dsa_key || dpkg-reconfigure openssh-server
+exit 0
 EOL
 
 # make sure the script is executable
