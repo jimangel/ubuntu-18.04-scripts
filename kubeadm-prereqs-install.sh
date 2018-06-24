@@ -23,12 +23,13 @@
 
 # SETUP & RUN
 # sudo apt -y install curl
-# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/kubeadm.sh | sudo -E bash -
+# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-18.04-scripts/master/kubeadm-prereqs-install.sh | sudo -E bash -
 
 # set vars
 goVersion="1.10.2"
 kubectlVersion="1.10.2"
 javaVersion="11"
+dockerVersion="17.03.2"
 
 # build function to see if program exists
 cant_find_program() {
@@ -37,28 +38,33 @@ cant_find_program() {
   fi
 }
 
-# install docker
-if cant_find_program docker; then
-  sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
-  sudo apt update
-  sudo apt -y install docker-ce
-  sudo usermod -a -G docker $USER
-  sudo systemctl enable docker
+if free | awk '/^Swap:/ {exit !$2}'; then
+    echo "WARNING: swap enabled, disabling now"
+    # disable swap
+    swapoff --all
+    sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
+else
+    echo "PASSED: swap disabled"
 fi
 
-# TO DO: ADD DOCKER CHECKS IN
-docker info | grep -i cgroup
-cat /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-echo "Make sure that the cgroup driver used by kubelet is the same as the one used by Docker. Verify that your Docker cgroup driver matches the kubelet config"
+# install docker
+if cant_find_program docker; then
+  echo "WARNING: docker not found, installing now"
+  sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+  sudo apt update
+  sudo apt -y install docker-ce=$dockerVersion~ce-0~ubuntu-xenial
+  sudo usermod -a -G docker $USER
+  sudo systemctl enable docker
+else
+	dockerSpecs=$(docker --version)
+    echo "PASSED: $dockerSpecs found"
+fi
 
-# sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-# systemctl daemon-reload
-# systemctl restart kubelet
-
-# install kubeadm reqs
+# install k8s utils
 if cant_find_program kubeadm; then
+  echo "WARNING: kubeadm not found, installing utils"
 apt-get update && apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
@@ -66,9 +72,6 @@ deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 apt-get update
 apt-get install -y kubelet kubeadm kubectl
+else
+ echo "PASSED: kubeadm found"
 fi
-
-sudo swapoff -a
-
-apt-get update && apt-get upgrade
-
