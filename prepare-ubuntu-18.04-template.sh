@@ -20,7 +20,7 @@ apt update -y
 apt upgrade -y
 
 #install packages
-apt install -y open-vm-tools
+apt remove -y open-vm-tools
 
 #Stop services for cleanup
 service rsyslog stop
@@ -88,4 +88,4 @@ cat /dev/null > ~/.bash_history && history -c
 history -w
 
 #shutdown
-shutdown -h now
+#shutdown -h now
