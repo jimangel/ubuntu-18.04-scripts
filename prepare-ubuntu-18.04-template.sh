@@ -81,7 +81,6 @@ sudo swapoff --all
 sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 
 # cleans out all of the cloud-init cache / logs - this is mainly cleaning out networking info
-echo "DISABLE_VMWARE_CUSTOMIZATION: false" | sudo tee -a /etc/cloud/cloud.cfg
 sudo cloud-init clean --logs
 
 #cleanup shell history
