@@ -10,7 +10,7 @@
 
 # SETUP & RUN
 # sudo apt -y install curl
-# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-tweaks/master/script.sh | sudo -E bash -
+# curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-18.04-scripts/master/developer-laptop-config.sh | sudo -E bash -
 
 # SET VARS
 goVersion="1.10.2"
