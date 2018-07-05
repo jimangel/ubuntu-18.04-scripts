@@ -7,6 +7,7 @@
 # TO DO
 # - git custom file
 # - consolidate the apt install junk...
+# - add ng (https://github.com/angular/angular-cli/wiki)
 
 # SETUP & RUN
 # sudo apt -y install curl
