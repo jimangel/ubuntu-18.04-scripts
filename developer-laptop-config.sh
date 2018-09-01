@@ -9,6 +9,7 @@
 # - consolidate the apt install junk...
 # - add ng (https://github.com/angular/angular-cli/wiki)
 # - add JQ
+# - add pythong / pip
 
 # SETUP & RUN
 # sudo apt -y install curl
