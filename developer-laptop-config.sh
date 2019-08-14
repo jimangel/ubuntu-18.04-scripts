@@ -70,9 +70,9 @@ fi
 # git config --global user.name "<name>"
 
 # install media codecs and fonts
-if ! grep "Commandline: apt install ubuntu-restricted-extras" /var/log/apt/history.log > /dev/null; then
-sudo apt -y install ubuntu-restricted-extras
-fi
+#if ! grep "Commandline: apt install ubuntu-restricted-extras" /var/log/apt/history.log > /dev/null; then
+#sudo apt -y install ubuntu-restricted-extras
+#fi
 
 # reminder to update to AM/PM format
 echo "MANUALLY UPDATE TO A 12HR CLOCK"
