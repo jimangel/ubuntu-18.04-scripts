@@ -16,8 +16,8 @@
 # curl -sL https://raw.githubusercontent.com/jimangel/ubuntu-18.04-scripts/master/developer-laptop-config.sh | sudo -E bash -
 
 # SET VARS
-goVersion="1.10.2"
-kubectlVersion="1.10.2"
+goVersion="1.12.9"
+kubectlVersion="1.15.2"
 javaVersion="11"
 # set font colors
 red='\033[0;31m'
