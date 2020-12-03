@@ -73,6 +73,11 @@ sed -i 's/preserve_hostname: false/preserve_hostname: true/g' /etc/cloud/cloud.c
 truncate -s0 /etc/hostname
 hostnamectl set-hostname localhost
 
+#reset machine id
+# machine id is used in ubuntu 20.04 lts to request dhcp
+# non-unique machine ids will result in the same ip being assigned to all vms
+truncate -s0 /etc/machine-id
+
 #cleanup apt
 apt clean
 
