@@ -84,6 +84,9 @@ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 # also look in /etc/netplan for other config files
 sed -i 's/optional: true/dhcp-identifier: mac/g' /etc/netplan/50-cloud-init.yaml
 
+# cleans machine id to avoid IP conflicts
+truncate -s0 /etc/machine-id
+
 # cleans out all of the cloud-init cache / logs - this is mainly cleaning out networking info
 sudo cloud-init clean --logs
 
